@@ -1,3 +1,4 @@
+global using customer_service.Helpers;
 
 namespace customer_service
 {
@@ -8,11 +9,7 @@ namespace customer_service
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            MiddlewareHelper.ConfigureServices(builder);
 
             var app = builder.Build();
 
