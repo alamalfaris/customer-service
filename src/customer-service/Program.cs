@@ -1,4 +1,5 @@
 global using customer_service.Helpers;
+global using customer_service.Models;
 
 namespace customer_service
 {
@@ -21,7 +22,7 @@ namespace customer_service
             }
 
             app.UseAuthorization();
-
+            app.UseExceptionHandler();
 
             app.MapControllers();
 

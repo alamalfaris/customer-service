@@ -29,5 +29,11 @@ namespace customer_service.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost]
+        public IActionResult Post()
+        {
+            throw new ArgumentNullException("null exception");
+        }
     }
 }
