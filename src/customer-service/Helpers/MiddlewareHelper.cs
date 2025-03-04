@@ -1,9 +1,12 @@
-﻿namespace customer_service.Helpers
+﻿using customer_service.Repositories;
+
+namespace customer_service.Helpers
 {
     public static class MiddlewareHelper
     {
         public static void ConfigureServices(WebApplicationBuilder builder)
         {
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddSingleton<DapperContext>();
             builder.Services.AddControllers();
             

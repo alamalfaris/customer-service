@@ -1,5 +1,6 @@
 global using customer_service.Helpers;
 global using customer_service.Models;
+global using customer_service.Interfaces;
 
 namespace customer_service
 {
