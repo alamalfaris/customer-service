@@ -24,12 +24,17 @@ namespace customer_service.Models
         public int? Page { get; set; }
 
         [JsonPropertyName("pageSize")]
-        [JsonPropertyOrder(4)]
+        [JsonPropertyOrder(5)]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? PageSize { get; set; }
 
+        [JsonPropertyName("errors")]
+        [JsonPropertyOrder(6)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<ErrorDetail>? Errors { get; set; }
+
         [JsonPropertyName("data")]
-        [JsonPropertyOrder(4)]
+        [JsonPropertyOrder(7)]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public T? Data { get; set; }
 
@@ -46,6 +51,11 @@ namespace customer_service.Models
         public static ApiResponse<T> Failure(string message, int statusCode, string? traceIdentifier = null)
         {
             return new ApiResponse<T> { Message = message, StatusCode = statusCode, TraceIdentifier = traceIdentifier };
+        }
+
+        public static ApiResponse<T> BadRequest(string message, int statusCode, List<ErrorDetail> errors)
+        {
+            return new ApiResponse<T> { Message = message, StatusCode = statusCode, Errors = errors };
         }
     }
 }
