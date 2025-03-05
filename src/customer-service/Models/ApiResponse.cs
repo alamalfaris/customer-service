@@ -4,26 +4,33 @@ namespace customer_service.Models
 {
     public class ApiResponse<T>
     {
-        [JsonPropertyName("data")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public T? Data { get; set; }
+        [JsonPropertyName("statusCode")]
+        [JsonPropertyOrder(1)]
+        public int StatusCode { get; set; }
 
         [JsonPropertyName("message")]
+        [JsonPropertyOrder(2)]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Message { get; set; }
 
-        [JsonPropertyName("requestId")]
+        [JsonPropertyName("traceIdentifier")]
+        [JsonPropertyOrder(3)]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? RequestId { get; set; }
+        public string? TraceIdentifier { get; set; }
 
-        public static ApiResponse<T> Success(T data)
+        [JsonPropertyName("data")]
+        [JsonPropertyOrder(4)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public T? Data { get; set; }
+
+        public static ApiResponse<T> Success(T data, int statusCode)
         {
-            return new ApiResponse<T> { Data = data };
+            return new ApiResponse<T> { Data = data, StatusCode = statusCode };
         }
 
-        public static ApiResponse<T> Failure(string message, string? requestId = null)
+        public static ApiResponse<T> Failure(string message, int statusCode, string? traceIdentifier = null)
         {
-            return new ApiResponse<T> { Message = message, RequestId = requestId };
+            return new ApiResponse<T> { Message = message, StatusCode = statusCode, TraceIdentifier = traceIdentifier };
         }
     }
 }

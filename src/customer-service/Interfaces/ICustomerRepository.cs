@@ -2,5 +2,6 @@
 {
     public interface ICustomerRepository
     {
+        Task<List<Customer>> GetCustomersAsync();
     }
 }

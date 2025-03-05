@@ -11,7 +11,7 @@ namespace customer_service.Repositories
             _context = context;
         }
 
-        public async Task<List<Customer>> GetCustomers()
+        public async Task<List<Customer>> GetCustomersAsync()
         {
             string sql = $@"SELECT [Id],[Name],[DateOfBirth],[PlaceOfBirth],[DeleteFlag],[CreatedDate]
                             FROM Customers";
