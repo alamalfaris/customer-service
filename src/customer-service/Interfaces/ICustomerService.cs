@@ -3,5 +3,6 @@
     public interface ICustomerService
     {
         ApiResponse<List<Customer>> GetCustomers();
+        void CreateCustomers(int numberOfCustomer);
     }
 }

@@ -23,5 +23,15 @@ namespace customer_service.Controllers
             var response = _customerService.GetCustomers();
             return StatusCode(response.StatusCode, response);
         }
+
+        [HttpPost("v1/customers/many/{numberOfCustomer}")]
+        public IActionResult CreateCustomers(int numberOfCustomer)
+        {
+            _logger.LogInformation("TraceIdentifier: {Identifier} - POST v1/customers/many/{NumberOfCustomer}", 
+                HttpContext.TraceIdentifier, numberOfCustomer);
+
+            _customerService.CreateCustomers(numberOfCustomer);
+            return Created();
+        }
     }
 }
