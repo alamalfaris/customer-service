@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using customer_service.Models;
+using Dapper;
 using System.Data;
 
 namespace customer_service.Repositories
@@ -12,13 +13,20 @@ namespace customer_service.Repositories
             _context = context;
         }
 
-        public async Task<List<Customer>> GetCustomersAsync()
+        public async Task<List<Customer>> GetCustomersAsync(int page, int pageSize)
         {
             string sql = $@"SELECT [Id],[Name],[DateOfBirth],[PlaceOfBirth],[DeleteFlag],[CreatedDate]
-                            FROM Customers";
+                            FROM Customers
+                            ORDER BY [CreatedDate] DESC
+                            OFFSET (@Page - 1) * @PageSize ROWS
+                            FETCH NEXT @PageSize ROWS ONLY";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("Page", page, DbType.Int32);
+            parameters.Add("PageSize", pageSize, DbType.Int32);
 
             using var connection = _context.CreateConnection();
-            var customers = await connection.QueryAsync<Customer>(sql);
+            var customers = await connection.QueryAsync<Customer>(sql, parameters);
             return customers.ToList();
         }
 

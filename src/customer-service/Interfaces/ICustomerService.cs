@@ -2,7 +2,7 @@
 {
     public interface ICustomerService
     {
-        ApiResponse<List<Customer>> GetCustomers();
+        ApiResponse<List<Customer>> GetCustomers(int page, int pageSize);
         void CreateCustomers(int numberOfCustomer);
     }
 }

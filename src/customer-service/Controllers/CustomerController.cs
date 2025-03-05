@@ -17,10 +17,10 @@ namespace customer_service.Controllers
         }
 
         [HttpGet("v1/customers")]
-        public IActionResult GetCustomers()
+        public IActionResult GetCustomers([FromQuery] int page, [FromQuery] int pageSize)
         {
             _logger.LogInformation("TraceIdentifier: {Identifier} - GET v1/customers initialize", HttpContext.TraceIdentifier);
-            var response = _customerService.GetCustomers();
+            var response = _customerService.GetCustomers(page, pageSize);
             return StatusCode(response.StatusCode, response);
         }
 
@@ -33,5 +33,8 @@ namespace customer_service.Controllers
             _customerService.CreateCustomers(numberOfCustomer);
             return Created();
         }
+
+        //[HttpPost("v1/customers")]
+        //public IActionResult CreateCustomer([FromBody] CreateCustomerDto createCustomerDto)
     }
 }
