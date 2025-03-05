@@ -17,10 +17,10 @@ namespace customer_service.Controllers
         }
 
         [HttpGet("v1/customers")]
-        public IActionResult GetCustomersAsync()
+        public IActionResult GetCustomers()
         {
             _logger.LogInformation("TraceIdentifier: {Identifier} - GET v1/customers initialize", HttpContext.TraceIdentifier);
-            var response = _customerService.GetCustomersAsync();
+            var response = _customerService.GetCustomers();
             return StatusCode(response.StatusCode, response);
         }
     }

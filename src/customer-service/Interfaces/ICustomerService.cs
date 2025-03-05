@@ -2,6 +2,6 @@
 {
     public interface ICustomerService
     {
-        ApiResponse<List<Customer>> GetCustomersAsync();
+        ApiResponse<List<Customer>> GetCustomers();
     }
 }

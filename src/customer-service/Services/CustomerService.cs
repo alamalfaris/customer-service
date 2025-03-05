@@ -9,7 +9,7 @@
             _repository = repository;
         }
 
-        public ApiResponse<List<Customer>> GetCustomersAsync()
+        public ApiResponse<List<Customer>> GetCustomers()
         {
             var customers = _repository.CustomerRepository.GetCustomersAsync().GetAwaiter().GetResult();
             return ApiResponse<List<Customer>>.Success(customers, StatusCodes.Status200OK);
