@@ -34,7 +34,11 @@ namespace customer_service.Controllers
             return Created();
         }
 
-        //[HttpPost("v1/customers")]
-        //public IActionResult CreateCustomer([FromBody] CreateCustomerDto createCustomerDto)
+        [HttpPost("v1/customers")]
+        public IActionResult CreateCustomer([FromBody] CreateCustomerDto createCustomerDto)
+        {
+            _customerService.CreateCustomer(createCustomerDto);
+            return Created();
+        }
     }
 }
