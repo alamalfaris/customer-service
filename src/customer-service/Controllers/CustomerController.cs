@@ -17,10 +17,10 @@ namespace customer_service.Controllers
         }
 
         [HttpGet("v1/customers")]
-        public IActionResult GetCustomers([FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<IActionResult> GetCustomers([FromQuery] int page, [FromQuery] int pageSize)
         {
             _logger.LogInformation("TraceIdentifier: {Identifier} - GET v1/customers initialize", HttpContext.TraceIdentifier);
-            var response = _customerService.GetCustomers(page, pageSize);
+            var response = await _customerService.GetCustomersAsync(page, pageSize);
             return StatusCode(response.StatusCode, response);
         }
 
@@ -35,9 +35,9 @@ namespace customer_service.Controllers
         }
 
         [HttpPost("v1/customers")]
-        public IActionResult CreateCustomer([FromBody] CreateCustomerDto createCustomerDto)
+        public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerDto createCustomerDto)
         {
-            _customerService.CreateCustomer(createCustomerDto);
+            await _customerService.CreateCustomerAsync(createCustomerDto);
             return Created();
         }
     }

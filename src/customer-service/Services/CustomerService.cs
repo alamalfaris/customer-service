@@ -9,9 +9,9 @@
             _repository = repository;
         }
 
-        public ApiResponse<List<Customer>> GetCustomers(int page, int pageSize)
+        public async Task<ApiResponse<List<Customer>>> GetCustomersAsync(int page, int pageSize)
         {
-            var customers = _repository.CustomerRepository.GetCustomersAsync(page, pageSize).GetAwaiter().GetResult();
+            var customers = await _repository.CustomerRepository.GetCustomersAsync(page, pageSize);
             return ApiResponse<List<Customer>>.Success(customers, StatusCodes.Status200OK);
         }
 
@@ -30,9 +30,9 @@
             }
         }
 
-        public void CreateCustomer(CreateCustomerDto createCustomerDto)
+        public async Task CreateCustomerAsync(CreateCustomerDto createCustomerDto)
         {
-            _repository.CustomerRepository.InsertCustomerAsync(createCustomerDto).GetAwaiter().GetResult();
+            await _repository.CustomerRepository.InsertCustomerAsync(createCustomerDto);
         }
     }
 }
