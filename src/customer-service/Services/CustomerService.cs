@@ -15,6 +15,12 @@
             return ApiResponse<List<Customer>>.Success(customers, StatusCodes.Status200OK);
         }
 
+        public async Task<ApiResponse<List<Customer>>> GetCustomersAsync(DateTime? lastCreatedDate, int pageSize)
+        {
+            var customers = await _repository.CustomerRepository.GetCustomersAsync(lastCreatedDate, pageSize);
+            return ApiResponse<List<Customer>>.Success(customers, StatusCodes.Status200OK);
+        }
+
         public void CreateCustomers(int numberOfCustomer)
         {
             for (int i = 0; i < numberOfCustomer; i++)

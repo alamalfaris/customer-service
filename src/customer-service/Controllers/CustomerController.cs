@@ -16,11 +16,19 @@ namespace customer_service.Controllers
             _customerService = customerService;
         }
 
-        [HttpGet("v1/customers")]
+        [HttpGet("v1/customers/offset")]
         public async Task<IActionResult> GetCustomers([FromQuery] int page, [FromQuery] int pageSize)
         {
             _logger.LogInformation("TraceIdentifier: {Identifier} - GET v1/customers initialize", HttpContext.TraceIdentifier);
             var response = await _customerService.GetCustomersAsync(page, pageSize);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpGet("v1/customers/keyset")]
+        public async Task<IActionResult> GetCustomers([FromQuery] DateTime? lastCreatedDate, [FromQuery] int pageSize)
+        {
+            _logger.LogInformation("TraceIdentifier: {Identifier} - GET v1/customers initialize", HttpContext.TraceIdentifier);
+            var response = await _customerService.GetCustomersAsync(lastCreatedDate, pageSize);
             return StatusCode(response.StatusCode, response);
         }
 

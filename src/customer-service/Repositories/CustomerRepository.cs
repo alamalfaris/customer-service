@@ -1,6 +1,7 @@
 ﻿using customer_service.Models;
 using Dapper;
 using System.Data;
+using System.Text;
 
 namespace customer_service.Repositories
 {
@@ -27,6 +28,29 @@ namespace customer_service.Repositories
 
             using var connection = _context.CreateConnection();
             var customers = await connection.QueryAsync<Customer>(sql, parameters);
+            return customers.ToList();
+        }
+
+        public async Task<List<Customer>> GetCustomersAsync(DateTime? lastCreatedDate, int pageSize)
+        {
+            StringBuilder sqlBuilder = new();
+            
+            sqlBuilder.Append($@"SELECT TOP (@PageSize) 
+	                                [Id],[Name],[DateOfBirth],[PlaceOfBirth],[DeleteFlag],[CreatedDate]
+                                FROM Customers ");
+
+            if (lastCreatedDate is not null)
+            {
+                sqlBuilder.Append($@"WHERE CreatedDate < @LastCreatedDate ");
+            }
+            sqlBuilder.Append($@"ORDER BY CreatedDate DESC");
+
+            var parameters = new DynamicParameters();
+            parameters.Add("PageSize", pageSize, DbType.Int32);
+            parameters.Add("LastCreatedDate", lastCreatedDate, DbType.DateTime);
+
+            using var connection = _context.CreateConnection();
+            var customers = await connection.QueryAsync<Customer>(sqlBuilder.ToString(), parameters);
             return customers.ToList();
         }
 
